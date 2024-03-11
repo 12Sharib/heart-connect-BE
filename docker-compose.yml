@@ -1,0 +1,31 @@
+version: '3'
+services:
+  mongodb:
+    image: mongo:7.0.6
+    ports:
+      - "27018:27017"
+    environment:
+      MONGO_INIT_DB_ROOT_USERNAME: admin
+      MONGO_INIT_DB_ROOT_PASSWORD: admin
+    networks:
+      - heart-connect-network
+    volumes:
+      - mongodb_data:/data/db
+
+  heart-connect:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - mongodb
+    ports:
+      - "9091:9091"
+    networks:
+      - heart-connect-network
+networks:
+  heart-connect-network:
+    driver: bridge
+
+volumes:
+  mongodb_data:
+

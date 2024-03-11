@@ -1,0 +1,29 @@
+paths:
+  /add/details/{email}:
+    post:
+      summary: Upload user details and images
+      parameters:
+        - name: email
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: multipartFile
+          in: formData
+          type: array
+          items:
+            type: string
+            format: binary
+          description: List of image files
+        - name: userDetailsDto
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/UserDetailsDto' # Assuming you have a definition for UserDetailsDto
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/GenericResponse' # Assuming you have a definition for GenericResponse
